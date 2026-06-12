@@ -22,9 +22,9 @@ const Billing = ({ user }) => {
     const token = Cookies.get('token');
     const h = { Authorization: `Bearer ${token}` };
     const [b, p, d] = await Promise.all([
-      axios.get('http://localhost:5000/api/billing', { headers: h }),
-      axios.get('http://localhost:5000/api/patients', { headers: h }),
-      axios.get('http://localhost:5000/api/staff/doctors', { headers: h }),
+      axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/billing`, { headers: h }),
+      axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/patients`, { headers: h }),
+      axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/staff/doctors`, { headers: h }),
     ]);
     setBills(b.data); setPatients(p.data); setDoctors(d.data);
   };
@@ -39,7 +39,7 @@ const Billing = ({ user }) => {
       const paid = parseFloat(form.paidAmount || 0);
       const status = paid >= t ? 'Paid' : paid > 0 ? 'Partial' : 'Unpaid';
       const payload = { ...form, totalAmount: t, paidAmount: paid, status, doctorId: form.doctorId || null };
-      await axios.post('http://localhost:5000/api/billing', payload, { headers: { Authorization: `Bearer ${token}` } });
+      await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/billing`, payload, { headers: { Authorization: `Bearer ${token}` } });
       setIsModalOpen(false); fetchAll();
       setForm({ patientId: '', doctorId: '', visitDate: '', consultationFee: '', medicationFee: '', labFee: '', otherFee: '', paidAmount: '', notes: '' });
     } catch (err) { setError(err.response?.data?.message || 'Failed'); }
@@ -47,14 +47,14 @@ const Billing = ({ user }) => {
 
   const markPaid = async (bill) => {
     const token = Cookies.get('token');
-    await axios.put(`http://localhost:5000/api/billing/${bill.id}`, { ...bill, paidAmount: bill.totalAmount, status: 'Paid' }, { headers: { Authorization: `Bearer ${token}` } });
+    await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/billing/${bill.id}`, { ...bill, paidAmount: bill.totalAmount, status: 'Paid' }, { headers: { Authorization: `Bearer ${token}` } });
     fetchAll();
   };
 
   const handleDelete = async (id) => {
     if (!confirm('Delete bill?')) return;
     const token = Cookies.get('token');
-    await axios.delete(`http://localhost:5000/api/billing/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+    await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/billing/${id}`, { headers: { Authorization: `Bearer ${token}` } });
     fetchAll();
   };
 

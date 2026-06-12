@@ -25,7 +25,7 @@ const Staff = ({ user }) => {
 
   const fetchStaff = async () => {
     const token = Cookies.get('token');
-    const res = await axios.get('http://localhost:5000/api/staff', { headers: { Authorization: `Bearer ${token}` } });
+    const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/staff`, { headers: { Authorization: `Bearer ${token}` } });
     setStaff(res.data);
   };
 
@@ -39,9 +39,9 @@ const Staff = ({ user }) => {
       const token = Cookies.get('token');
       const headers = { Authorization: `Bearer ${token}` };
       if (editTarget) {
-        await axios.put(`http://localhost:5000/api/staff/${editTarget.id}`, form, { headers });
+        await axios.put(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/staff/${editTarget.id}`, form, { headers });
       } else {
-        await axios.post('http://localhost:5000/api/staff', form, { headers });
+        await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/staff`, form, { headers });
       }
       setIsModalOpen(false);
       fetchStaff();
@@ -53,7 +53,7 @@ const Staff = ({ user }) => {
   const handleDelete = async (id) => {
     if (!confirm('Are you sure you want to remove this staff member?')) return;
     const token = Cookies.get('token');
-    await axios.delete(`http://localhost:5000/api/staff/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+    await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/staff/${id}`, { headers: { Authorization: `Bearer ${token}` } });
     fetchStaff();
   };
 

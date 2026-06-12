@@ -22,9 +22,9 @@ const MedicalRecords = ({ user }) => {
     const token = Cookies.get('token');
     const headers = { Authorization: `Bearer ${token}` };
     const [recs, pts, docs] = await Promise.all([
-      axios.get('http://localhost:5000/api/records', { headers }),
-      axios.get('http://localhost:5000/api/patients', { headers }),
-      axios.get('http://localhost:5000/api/staff/doctors', { headers }),
+      axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/records`, { headers }),
+      axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/patients`, { headers }),
+      axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/staff/doctors`, { headers }),
     ]);
     setRecords(recs.data);
     setPatients(pts.data);
@@ -38,7 +38,7 @@ const MedicalRecords = ({ user }) => {
       const token = Cookies.get('token');
       const payload = { ...form };
       if (!payload.doctorId) payload.doctorId = null;
-      await axios.post('http://localhost:5000/api/records', payload, { headers: { Authorization: `Bearer ${token}` } });
+      await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/records`, payload, { headers: { Authorization: `Bearer ${token}` } });
       setIsModalOpen(false);
       fetchAll();
       setForm({ patientId: '', doctorId: user.role === 'doctor' ? user.id : '', visitDate: '', diagnosis: '', prescription: '', labResults: '', notes: '' });
@@ -50,7 +50,7 @@ const MedicalRecords = ({ user }) => {
   const handleDelete = async (id) => {
     if (!confirm('Delete this record?')) return;
     const token = Cookies.get('token');
-    await axios.delete(`http://localhost:5000/api/records/${id}`, { headers: { Authorization: `Bearer ${token}` } });
+    await axios.delete(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/records/${id}`, { headers: { Authorization: `Bearer ${token}` } });
     fetchAll();
   };
 

@@ -21,8 +21,8 @@ const Dashboard = ({ user }) => {
         const headers = { Authorization: `Bearer ${token}` };
         
         const [patientsRes, appointmentsRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/patients', { headers }),
-          axios.get('http://localhost:5000/api/appointments', { headers })
+          axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/patients`, { headers }),
+          axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/appointments`, { headers })
         ]);
         
         setPatients(patientsRes.data);
@@ -33,8 +33,8 @@ const Dashboard = ({ user }) => {
           if (myProfile) {
             try {
               const [recordsRes, billsRes] = await Promise.all([
-                axios.get(`http://localhost:5000/api/records/patient/${myProfile.id}`, { headers }),
-                axios.get('http://localhost:5000/api/billing', { headers })
+                axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/records/patient/${myProfile.id}`, { headers }),
+                axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/billing`, { headers })
               ]);
               setRecords(recordsRes.data);
               setBills(billsRes.data.filter(b => b.patientId === myProfile.id));

@@ -19,10 +19,10 @@ const Register = ({ onLogin }) => {
     setLoading(true);
 
     try {
-      const regRes = await axios.post('http://localhost:5000/api/auth/register', formData);
+      const regRes = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/register`, formData);
       if (regRes.status === 201) {
         // Auto login after registration
-        const loginRes = await axios.post('http://localhost:5000/api/auth/login', {
+        const loginRes = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/auth/login`, {
           email: formData.email,
           password: formData.password
         });

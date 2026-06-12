@@ -27,7 +27,7 @@ const Patients = ({ user }) => {
   const fetchPatients = async () => {
     try {
       const token = Cookies.get('token');
-      const res = await axios.get('http://localhost:5000/api/patients', {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/patients`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       // Filter if it's a patient user, they only see their own records matching email.
@@ -45,7 +45,7 @@ const Patients = ({ user }) => {
     e.preventDefault();
     try {
       const token = Cookies.get('token');
-      await axios.post('http://localhost:5000/api/patients', formData, {
+      await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/patients`, formData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setIsModalOpen(false);

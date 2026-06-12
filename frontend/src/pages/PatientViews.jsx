@@ -14,10 +14,10 @@ const MyRecords = ({ user }) => {
       try {
         const token = Cookies.get('token');
         const h = { Authorization: `Bearer ${token}` };
-        const pRes = await axios.get('http://localhost:5000/api/patients', { headers: h });
+        const pRes = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/patients`, { headers: h });
         const me = pRes.data.find(p => p.email === user.email);
         if (me) {
-          const rRes = await axios.get(`http://localhost:5000/api/records/patient/${me.id}`, { headers: h });
+          const rRes = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/records/patient/${me.id}`, { headers: h });
           setRecords(rRes.data);
         }
       } catch { }
@@ -85,8 +85,8 @@ export const MyBills = ({ user }) => {
         const token = Cookies.get('token');
         const h = { Authorization: `Bearer ${token}` };
         const [pRes, bRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/patients', { headers: h }),
-          axios.get('http://localhost:5000/api/billing', { headers: h }),
+          axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/patients`, { headers: h }),
+          axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/billing`, { headers: h }),
         ]);
         const me = pRes.data.find(p => p.email === user.email);
         if (me) setBills(bRes.data.filter(b => b.patientId === me.id));

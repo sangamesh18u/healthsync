@@ -27,7 +27,7 @@ const Appointments = ({ user }) => {
   const fetchAppointments = async () => {
     try {
       const token = Cookies.get('token');
-      const res = await axios.get('http://localhost:5000/api/appointments', {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/appointments`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setAppointments(res.data);
@@ -39,7 +39,7 @@ const Appointments = ({ user }) => {
   const fetchPatients = async () => {
     try {
       const token = Cookies.get('token');
-      const res = await axios.get('http://localhost:5000/api/patients', {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/patients`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -78,7 +78,7 @@ const Appointments = ({ user }) => {
         return;
       }
 
-      await axios.post('http://localhost:5000/api/appointments', payload, {
+      await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/appointments`, payload, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setIsModalOpen(false);
