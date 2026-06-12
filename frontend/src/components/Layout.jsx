@@ -57,7 +57,7 @@ const Layout = ({ user, onLogout }) => {
       style={{
         backgroundImage: "url('/doctor_bg.png')",
         backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundPosition: 'top right',
         backgroundAttachment: 'fixed'
       }}
     >

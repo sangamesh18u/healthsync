@@ -25,7 +25,7 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 relative" style={{ backgroundImage: "url('/doctor_bg.png')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
+    <div className="min-h-screen flex items-center justify-center p-4 relative" style={{ backgroundImage: "url('/doctor_bg.png')", backgroundSize: 'cover', backgroundPosition: 'top right' }}>
       <div className="absolute inset-0 bg-blue-900/20"></div>
       
       <div className="max-w-md w-full bg-white/40 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden relative z-10 border border-white/20">
